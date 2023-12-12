@@ -18,7 +18,10 @@ const corsOptions: CorsOptions = {
 const {
   NODE_PORT,
   NODE_HOST,
-  NODE_ENV
+  NODE_ENV,
+  COINGECKO_BASE_URL,
+  COINGECKO_API_KEY,
+  COINGECKO_API_KEY_QUERY_NAME
 } = process.env;
 
 const ENV: ApplicationEnv = NODE_ENV as ApplicationEnv || ApplicationEnv.DEVELOPMENT;
@@ -28,4 +31,7 @@ export const CONFIG = {
   NODE_HOST,
   CORS_OPTIONS: corsOptions,
   NODE_ENV: ENV,
+  COINGECKO_BASE_URL,
+  COINGECKO_API_KEY,
+  COINGECKO_API_KEY_QUERY_NAME
 };

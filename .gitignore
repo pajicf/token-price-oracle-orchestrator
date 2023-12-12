@@ -10,4 +10,4 @@ node_modules
 .vscode
 
 # Ignore built ts files
-dist/**/*
+dist
