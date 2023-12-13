@@ -9,10 +9,10 @@ class CronService {
     this._jobs = new Map();
   }
 
-  public scheduleRecurringJob(job: () => any, minutes: number = 1): number {
+  public scheduleRecurringJob(job: () => any, minutes: number = 1, runImmediately: boolean = false): number {
     const task = cron.schedule(`*/${minutes} * * * *`, () => {
       job();
-    });
+    }, { runOnInit: runImmediately });
 
     const jobId = this._nextJobID;
     this._jobs.set(jobId, task);
