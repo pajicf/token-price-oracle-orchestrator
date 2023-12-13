@@ -6,6 +6,7 @@ class CronService {
 
   constructor() {
     this._nextJobID = 0;
+    this._jobs = new Map();
   }
 
   public scheduleRecurringJob(job: () => any, minutes: number = 1): number {
