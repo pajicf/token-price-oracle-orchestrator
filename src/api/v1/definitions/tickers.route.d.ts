@@ -1,7 +1,7 @@
-import {EmptyObject, ParamsDictionary} from "../../../types/util.types";
-import {TickerEntity} from "../../../entities/ticker.entity";
-import {IResponseSuccess} from "../../../utils/response.util";
-import {NextFunction, Request as ExpressRequest, Response as ExpressResponse} from "express";
+import { EmptyObject, ParamsDictionary } from "../../../types/util.types";
+import { TickerEntity } from "../../../entities/ticker.entity";
+import { IResponseSuccess } from "../../../utils/response.util";
+import { NextFunction, Request as ExpressRequest, Response as ExpressResponse } from "express";
 
 
 export enum ETickersRoute {
@@ -20,10 +20,10 @@ declare namespace TickersRouteDefinitions {
     T extends ETickersRoute.GetTickerHistory ? EmptyObject :
     EmptyObject
 
-  type RequestBody<T extends ETickersRoute> =
+  type RequestBody<T extends ETickersRoute> = // eslint-disable-line @typescript-eslint/no-unused-vars
     EmptyObject;
 
-  type RequestQueries<T extends ETickersRoute> =
+  type RequestQueries<T extends ETickersRoute> = // eslint-disable-line @typescript-eslint/no-unused-vars
     EmptyObject
 
   type RequestParams<T extends ETickersRoute> =

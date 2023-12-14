@@ -44,7 +44,7 @@ export const initOnchainPriceState = async (symbols: string[]) => {
 
 const isJobActive: Map<string, boolean> = new Map();
 export const setupOnchainPriceFetchingJobFor = async (tickerSymbol: string) => {
-  if (!!isJobActive.get(tickerSymbol)) {
+  if (isJobActive.get(tickerSymbol)) {
     return;
   } else {
     isJobActive.set(tickerSymbol, true);
@@ -53,5 +53,5 @@ export const setupOnchainPriceFetchingJobFor = async (tickerSymbol: string) => {
   logger.log("Setting up the onchain Price fetching observer for ", tickerSymbol);
   await oracleService.listenForOnchainPriceUpdates(tickerSymbol, (tickerPriceData) => {
     updateReduxTickerOnchainPrice(tickerPriceData.tickerSymbol, tickerPriceData.newPrice);
-  })
+  });
 };

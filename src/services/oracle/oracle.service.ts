@@ -61,10 +61,10 @@ class OracleService {
       }
 
       const parsedEvent = this.parseTickerPriceUpdatedEvent(data);
-      logger.log(`${parsedEvent.tickerSymbol} price updated on-chain to ${parsedEvent.newPrice}`)
+      logger.log(`${parsedEvent.tickerSymbol} price updated on-chain to ${parsedEvent.newPrice}`);
 
       onPriceUpdate(parsedEvent);
-    })
+    });
   }
 
   private parseTickerPriceUpdatedEvent(event: TypedEventLog<any>): TickerPriceData {

@@ -1,9 +1,9 @@
 import TickersRouteDefinitions from "../definitions/tickers.route";
-import {ETickersRoute} from "../definitions/tickers.route";
-import {tickerEntityFromReduxState} from "../../../entities/ticker.entity";
+import { ETickersRoute } from "../definitions/tickers.route";
+import { tickerEntityFromReduxState } from "../../../entities/ticker.entity";
 import store from "../../../redux/store";
-import {NotFoundError} from "../../../utils/errors.util";
-import {APIResponse} from "../../../utils/response.util";
+import { NotFoundError } from "../../../utils/errors.util";
+import { APIResponse } from "../../../utils/response.util";
 
 class TickersRoute {
   public static getTicker: TickersRouteDefinitions.RouteMethod<ETickersRoute.GetTicker> = async (request, response, next) => {
@@ -22,7 +22,7 @@ class TickersRoute {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
   public static getTickerList: TickersRouteDefinitions.RouteMethod<ETickersRoute.GetTickerList> = async (request, response, next) => {
     try {
@@ -35,7 +35,7 @@ class TickersRoute {
     } catch (error) {
       next(error);
     }
-  }
+  };
 }
 
 export default TickersRoute;

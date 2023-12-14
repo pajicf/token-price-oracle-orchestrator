@@ -1,5 +1,5 @@
 // Used for typing some dynamic object, first param defines the value type, second the key type
-import {ParamSchema} from "express-validator";
+import { ParamSchema } from "express-validator";
 
 export type DynamicObject<
   Value = any,
@@ -11,7 +11,7 @@ export type DynamicObject<
 
 export type AllKeysRequired = true;
 
-export type EmptyObject = {};
+export type EmptyObject = object;
 
 export type ParamsDictionary = {[key: string]: string};
 

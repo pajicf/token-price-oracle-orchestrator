@@ -3,7 +3,7 @@ import store from "../redux/store";
 import { addTicker } from "../redux/tickers/tickers.redux.actions";
 import { TickerRegistryData } from "../services/tickers/tickers.service.types";
 import logger from "../utils/logger.util";
-import { setupOnchainPriceFetchingJobFor} from "./price.jobs";
+import { setupOnchainPriceFetchingJobFor } from "./price.jobs";
 
 const tickersService = new TickersService();
 
@@ -27,6 +27,6 @@ export const setupTickerFetchingJob = async () => {
   logger.log("Setting up the Ticker Fetching observer");
   tickersService.listenForTickerUpdates(tickerData => {
     updateReduxTickerState(tickerData);
-    setupOnchainPriceFetchingJobFor(tickerData.tickerSymbol)
+    setupOnchainPriceFetchingJobFor(tickerData.tickerSymbol);
   }).then();
 };

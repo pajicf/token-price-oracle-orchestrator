@@ -11,6 +11,6 @@ v1.get("/tickers/:tickerSymbol", TickersValidator.validateGetTicker, TickersRout
 
 v1.get("/status", StatusRoute.getStatus);
 
-v1.use(error)
+v1.use(error);
 
 export default v1;

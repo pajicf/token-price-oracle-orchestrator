@@ -1,6 +1,6 @@
-import { ValidationChain, validationResult } from 'express-validator';
-import { NextFunction, RequestHandler } from 'express';
-import { CustomValidationError } from '../../../utils/errors.util';
+import { ValidationChain, validationResult } from "express-validator";
+import { NextFunction, RequestHandler } from "express";
+import { CustomValidationError } from "../../../utils/errors.util";
 
 async function validateRequest(request?: Request, response?: Response, next?: NextFunction) {
   const result = validationResult(request);
@@ -14,6 +14,6 @@ async function validateRequest(request?: Request, response?: Response, next?: Ne
 }
 
 export function val(validationChain: ValidationChain[]): RequestHandler[] {
-  // @ts-ignore
+  // @ts-expect-error Type mismatch for validationChain, but actually is fitting
   return [...validationChain, validateRequest];
 }

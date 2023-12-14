@@ -1,5 +1,5 @@
-import {RootState} from "../redux/redux.types";
-import {Nullable} from "../types/util.types";
+import { RootState } from "../redux/redux.types";
+import { Nullable } from "../types/util.types";
 
 export type TickerEntity =  {
   symbol: string;
@@ -15,7 +15,7 @@ export function tickerEntityFromReduxState(tickerSymbol: string, state: RootStat
       symbol: tickerSymbol,
       onchainPrice: tickerPrices.onchain,
       offchainPrice: tickerPrices.offchain
-    }
+    };
   } else {
     return undefined;
   }
