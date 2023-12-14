@@ -22,8 +22,6 @@ export const setupOffchainPriceFetchingJob = async () => {
       if (currentPrice) {
         store.dispatch(setCurrentOffchainPrice(symbol, currentPrice));
       }
-
-      console.log(`Updating price of ${symbol} to ${currentPrice}`);
       try {
         await oracleService.updateOnchainPrice(symbol, currentPrice);
       } catch (err) { console.log(err);}
