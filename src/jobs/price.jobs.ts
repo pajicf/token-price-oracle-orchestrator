@@ -5,6 +5,7 @@ import { getCoingeckoIdByChainlinkTicker } from "../constants/coingecko";
 import { setCurrentOffchainPrice, setCurrentOnchainPrice } from "../redux/prices/prices.redux.actions";
 import OracleService from "../services/oracle/oracle.service";
 import logger from "../utils/logger.util";
+import { RootSocket } from "../index";
 
 const coinGecko = new CoinGeckoService();
 const oracleService = new OracleService();
@@ -53,5 +54,6 @@ export const setupOnchainPriceFetchingJobFor = async (tickerSymbol: string) => {
   logger.log("Setting up the onchain Price fetching observer for ", tickerSymbol);
   await oracleService.listenForOnchainPriceUpdates(tickerSymbol, (tickerPriceData) => {
     updateReduxTickerOnchainPrice(tickerPriceData.tickerSymbol, tickerPriceData.newPrice);
+    RootSocket.emitEvent("TickerPriceUpdated", [tickerPriceData.tickerSymbol, tickerPriceData.newPrice]);
   });
 };
