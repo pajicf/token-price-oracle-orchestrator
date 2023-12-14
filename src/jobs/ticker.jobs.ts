@@ -13,8 +13,12 @@ const updateReduxTickerState = (tickerData: TickerRegistryData) => {
 export const initTickerState = async () => {
   logger.log("Fetching all currently available tickers");
   const tickers = await tickersService.getAllTickers();
-  logger.log("Tickers found: ", tickers);
-  tickers.forEach(updateReduxTickerState);
+  let symbols: string[] = [];
+  tickers.forEach(tickerData => {
+    updateReduxTickerState(tickerData);
+    symbols.push(tickerData.tickerSymbol);
+  });
+  logger.log("Tickers found: ", symbols);
 };
 
 export const setupTickerFetchingJob = async () => {
