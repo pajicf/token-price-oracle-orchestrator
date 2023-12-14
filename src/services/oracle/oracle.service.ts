@@ -51,6 +51,22 @@ class OracleService {
     }
   }
 
+  public async listenForOnchainPriceUpdates(tickerSymbol: string, onPriceUpdate: (tickerPriceData: TickerPriceData) => void) {
+    const startBlockNumber = await Web3Service.provider.getBlockNumber();
+    const eventFilter = this._tickerPriceContract.filters.TickerPriceUpdated(tickerSymbol);
+
+    await this._tickerPriceContract.on<any>(eventFilter, (data) => {
+      if (data.log.blockNumber <= startBlockNumber) {
+        return;
+      }
+
+      const parsedEvent = this.parseTickerPriceUpdatedEvent(data);
+      logger.log(`${parsedEvent.tickerSymbol} price updated on-chain to ${parsedEvent.newPrice}`)
+
+      onPriceUpdate(parsedEvent);
+    })
+  }
+
   private parseTickerPriceUpdatedEvent(event: TypedEventLog<any>): TickerPriceData {
     const args = event.args as [string, number];
     const newPrice = args[1];
