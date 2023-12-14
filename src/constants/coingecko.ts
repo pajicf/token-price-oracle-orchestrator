@@ -7,7 +7,7 @@ const chainlinkTickerToCoingeckoMap: {[symbol: string]: string} = {
   "ETH": "ethereum",
   "LINK": "chainlink",
   "SNX": "havven"
-}
+};
 
 export function getCoingeckoIdByChainlinkTicker(ticker: string) {
   return chainlinkTickerToCoingeckoMap[ticker];

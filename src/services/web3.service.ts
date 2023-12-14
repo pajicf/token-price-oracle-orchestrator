@@ -1,5 +1,5 @@
 import { ethers, JsonRpcProvider, Wallet } from "ethers";
-import { TickerUSDFeedRegistryAbi__factory } from "../contracts";
+import { TickerPriceStorageAbi__factory, TickerUSDFeedRegistryAbi__factory } from "../contracts";
 
 import { CONFIG } from "../config";
 
@@ -12,14 +12,16 @@ class Web3Service {
     this.signer = new ethers.Wallet(signerPrivateKey, this.provider);
   }
 
-  public getTickerUSDFeedRegistryContract(address: string, isMutatingState?: boolean) {
-    const contract =  TickerUSDFeedRegistryAbi__factory.connect(address);
+  private _getRunner(isMutatingState: boolean) {
+    return isMutatingState ? this.signer : this.provider;
+  }
 
-    if (isMutatingState) {
-      return contract.connect(this.signer);
-    } else {
-      return contract.connect(this.provider);
-    }
+  public getTickerUSDFeedRegistryContract(address: string, isMutatingState?: boolean) {
+    return TickerUSDFeedRegistryAbi__factory.connect(address, this._getRunner(!!isMutatingState));
+  }
+
+  public getTickerPriceStorageContract(address: string, isMutatingState?: boolean) {
+    return TickerPriceStorageAbi__factory.connect(address, this._getRunner(!!isMutatingState));
   }
 }
 

@@ -1,9 +1,9 @@
-import {EPricesReduxActions, PricesReduxActions, PricesReduxReducerState} from "./prices.redux.types";
-import {Reducer} from "redux";
+import { EPricesReduxActions, PricesReduxActions, PricesReduxReducerState } from "./prices.redux.types";
+import { Reducer } from "redux";
 
 const initialState: PricesReduxReducerState = {
   current: {}
-}
+};
 
 const pricesReduxReducer: Reducer<PricesReduxReducerState, PricesReduxActions> = (state = initialState, action) => {
   switch (action.type) {
@@ -19,7 +19,7 @@ const pricesReduxReducer: Reducer<PricesReduxReducerState, PricesReduxActions> =
             onchain: onchainPrice
           }
         }
-      }
+      };
     }
     case EPricesReduxActions.SET_CURRENT_OFFCHAIN_PRICE: {
       const { tickerSymbol, offchainPrice } = action.payload;
@@ -33,12 +33,12 @@ const pricesReduxReducer: Reducer<PricesReduxReducerState, PricesReduxActions> =
             offchain: offchainPrice
           }
         }
-      }
+      };
     }
     default: {
       return initialState;
     }
   }
-}
+};
 
 export default pricesReduxReducer;

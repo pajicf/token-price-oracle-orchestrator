@@ -2,6 +2,7 @@ import Web3Service from "../web3.service";
 import { CONFIG } from "../../config";
 import { TypedEventLog } from "../../contracts/common";
 import { TickerRegistryData } from "./tickers.service.types";
+import logger from "../../utils/logger.util";
 
 class TickersService {
   private _registryContract;
@@ -21,6 +22,8 @@ class TickersService {
       }
 
       const parsedEvent = this.parseTickerFeedUpdatedEvent(data);
+      logger.log("New ticker found: ", parsedEvent);
+
       onTickerUpdate(parsedEvent);
     });
   }
