@@ -18,10 +18,13 @@ export const initTickerState = async () => {
     updateReduxTickerState(tickerData);
     symbols.push(tickerData.tickerSymbol);
   });
+
   logger.log("Tickers found: ", symbols);
 };
 
 export const setupTickerFetchingJob = async () => {
   logger.log("Setting up the Ticker Fetching observer");
-  tickersService.listenForTickerUpdates(updateReduxTickerState).then();
+  tickersService.listenForTickerUpdates(tickerData => {
+    updateReduxTickerState(tickerData);
+  }).then();
 };

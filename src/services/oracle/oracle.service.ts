@@ -1,18 +1,20 @@
 import Web3Service from "../web3.service";
 import { CONFIG } from "../../config";
 import logger from "../../utils/logger.util";
+import { TypedEventLog } from "../../contracts/common";
+import { TickerPriceData } from "./oracle.service.types";
 
 class OracleService {
   private _tickerPriceContract;
+  private readonly _numberOfChainlinkDecimals = 8;
 
   constructor() {
     this._tickerPriceContract = Web3Service.getTickerPriceStorageContract(CONFIG.TICKER_PRICE_STORAGE, true);
   }
   
   public async updateOnchainPrice(ticker: string, newPrice: number) {
-    const numberOfChainlinkDecimals = 8;
     // @TODO Update to use BigInt
-    const parsedPrice = Math.trunc(newPrice * 10**numberOfChainlinkDecimals);
+    const parsedPrice = Math.trunc(newPrice * 10**this._numberOfChainlinkDecimals);
     logger.log("Trying to update onchain price of ", ticker, " to ", newPrice);
 
     const willRevert = await this.isPriceUpdateGoingToRevert(ticker, parsedPrice);
@@ -35,6 +37,29 @@ class OracleService {
     } catch (err) {
       return true;
     }
+  }
+
+  public async getOnchainPrice(tickerSymbol: string): Promise<number> {
+    const eventFilter = this._tickerPriceContract.filters.TickerPriceUpdated(tickerSymbol);
+    const results = await this._tickerPriceContract.queryFilter(eventFilter);
+
+    if (results.length > 0 ) {
+      const latestEvent = this.parseTickerPriceUpdatedEvent(results[results.length-1]);
+      return latestEvent.newPrice;
+    } else {
+      return 0;
+    }
+  }
+
+  private parseTickerPriceUpdatedEvent(event: TypedEventLog<any>): TickerPriceData {
+    const args = event.args as [string, number];
+    const newPrice = args[1];
+    const parsedPrice = (Number(newPrice) / (10**this._numberOfChainlinkDecimals));
+
+    return {
+      tickerSymbol: args[0],
+      newPrice: parsedPrice
+    };
   }
 }
 

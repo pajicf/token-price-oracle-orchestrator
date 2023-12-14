@@ -2,13 +2,14 @@ import CoinGeckoService from "../services/coingecko/coingecko.service";
 import CronService from "../services/cron.service";
 import store from "../redux/store";
 import { getCoingeckoIdByChainlinkTicker } from "../constants/coingecko";
-import { setCurrentOffchainPrice } from "../redux/prices/prices.redux.actions";
+import { setCurrentOffchainPrice, setCurrentOnchainPrice } from "../redux/prices/prices.redux.actions";
 import OracleService from "../services/oracle/oracle.service";
+import logger from "../utils/logger.util";
+
+const coinGecko = new CoinGeckoService();
+const oracleService = new OracleService();
 
 export const setupOffchainPriceFetchingJob = async () => {
-  const coinGecko = new CoinGeckoService();
-  const oracleService = new OracleService();
-
   CronService.scheduleRecurringJob(async () => {
     const tickerSymbols = store.getState().tickers.symbols;
     const tickerCoinGeckoIds = tickerSymbols.map(getCoingeckoIdByChainlinkTicker);
@@ -27,4 +28,21 @@ export const setupOffchainPriceFetchingJob = async () => {
       } catch (err) { console.log(err);}
     }
   });
+};
+
+const updateReduxTickerOnchainPrice = (tickerSymbol: string, tickerPrice: number) => {
+  store.dispatch(setCurrentOnchainPrice(tickerSymbol, tickerPrice));
+};
+
+export const initOnchainPriceState = async (symbols: string[]) => {
+  for (let i = 0; i < symbols.length; i++) {
+    const tickerSymbol = symbols[i];
+    const newPrice = await oracleService.getOnchainPrice(tickerSymbol);
+    updateReduxTickerOnchainPrice(tickerSymbol, newPrice);
+  }
+};
+
+export const setupOnchainPriceFetchingJob = async (tickerSymbol: string) => {
+  logger.log("Setting up the onchain Price fetching observer for ", tickerSymbol);
+  console.log(await oracleService.getOnchainPrice(tickerSymbol));
 };
