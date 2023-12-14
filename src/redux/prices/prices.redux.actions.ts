@@ -1,4 +1,4 @@
-import {EPricesReduxActions, SetCurrentOffchainPriceAction, SetCurrentOnchainPriceAction} from "./prices.redux.types";
+import { EPricesReduxActions, SetCurrentOffchainPriceAction, SetCurrentOnchainPriceAction } from "./prices.redux.types";
 
 export function setCurrentOnchainPrice(tickerSymbol: string, onchainPrice: number): SetCurrentOnchainPriceAction {
   return {
@@ -7,7 +7,7 @@ export function setCurrentOnchainPrice(tickerSymbol: string, onchainPrice: numbe
       tickerSymbol,
       onchainPrice
     }
-  }
+  };
 }
 
 export function setCurrentOffchainPrice(tickerSymbol: string, offchainPrice: number): SetCurrentOffchainPriceAction {
@@ -17,5 +17,5 @@ export function setCurrentOffchainPrice(tickerSymbol: string, offchainPrice: num
       tickerSymbol,
       offchainPrice
     }
-  }
+  };
 }

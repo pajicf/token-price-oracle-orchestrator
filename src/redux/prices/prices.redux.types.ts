@@ -1,4 +1,4 @@
-import {ReduxAction} from "../redux.types";
+import { ReduxAction } from "../redux.types";
 
 export enum EPricesReduxActions {
   SET_CURRENT_ONCHAIN_PRICE = "SET_CURRENT_ONCHAIN_PRICE",
