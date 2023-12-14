@@ -18,6 +18,7 @@ export const initTickerState = async () => {
   tickers.forEach(tickerData => {
     updateReduxTickerState(tickerData);
     symbols.push(tickerData.tickerSymbol);
+    setupOnchainPriceFetchingJobFor(tickerData.tickerSymbol);
   });
 
   logger.log("Tickers found: ", symbols);

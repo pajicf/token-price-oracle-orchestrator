@@ -61,7 +61,7 @@ class OracleService {
       }
 
       const parsedEvent = this.parseTickerPriceUpdatedEvent(data);
-      logger.log(`${parsedEvent.tickerSymbol} price updated on-chain to ${parsedEvent.newPrice}`);
+      logger.log(`${tickerSymbol} price updated on-chain to ${parsedEvent.newPrice}`);
 
       onPriceUpdate(parsedEvent);
     });
@@ -73,7 +73,6 @@ class OracleService {
     const parsedPrice = (Number(newPrice) / (10**this._numberOfChainlinkDecimals));
 
     return {
-      tickerSymbol: args[0],
       newPrice: parsedPrice
     };
   }

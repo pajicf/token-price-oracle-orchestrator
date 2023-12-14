@@ -53,7 +53,7 @@ export const setupOnchainPriceFetchingJobFor = async (tickerSymbol: string) => {
 
   logger.log("Setting up the onchain Price fetching observer for ", tickerSymbol);
   await oracleService.listenForOnchainPriceUpdates(tickerSymbol, (tickerPriceData) => {
-    updateReduxTickerOnchainPrice(tickerPriceData.tickerSymbol, tickerPriceData.newPrice);
-    RootSocket.emitEvent("TickerPriceUpdated", [tickerPriceData.tickerSymbol, tickerPriceData.newPrice]);
+    updateReduxTickerOnchainPrice(tickerSymbol, tickerPriceData.newPrice);
+    RootSocket.emitEvent("TickerPriceUpdated", [tickerSymbol, tickerPriceData.newPrice]);
   });
 };
