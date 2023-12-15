@@ -70,7 +70,7 @@ export const setupOnchainPriceFetchingJobFor = async (tickerSymbol: string) => {
 
 let lastBlockCache: number = CONFIG.CONTRACTS_DEPLOYMENT_BLOCK;
 const fetchPriceUpdatingRevertHistory = async () => {
-  logger.log(`Trying to find reverts since block number: ${lastBlockCache}`)
+  logger.log(`Trying to find reverts since block number: ${lastBlockCache}`);
 
   const currentBlockNumber = await Web3Service.provider.getBlockNumber();
   const revertedTransactions = await etherscan.getRevertedTxHistory(CONFIG.TICKER_PRICE_STORAGE, lastBlockCache);
@@ -78,7 +78,7 @@ const fetchPriceUpdatingRevertHistory = async () => {
 
   for (let i = 0; i < revertedTransactions.length; i++) {
     const tx = revertedTransactions[i];
-    logger.log(`Revert found with tx hash ${tx.hash}`)
+    logger.log(`Revert found with tx hash ${tx.hash}`);
 
     const parsedTxInputs = oracleService.parseInputData(tx.input);
     const chainlinkFeedAddress = store.getState().tickers.chainlinkFeed[parsedTxInputs.ticker];
@@ -93,12 +93,12 @@ const fetchPriceUpdatingRevertHistory = async () => {
 
     store.dispatch(addPriceRevertedTx(tx.hash, parsedTxInputs.ticker, Number(parsedTxInputs.price), Number(chainlinkPrice)));
   }
-}
+};
 
 export const setupPriceUpdateRevertObserverJob = async () => {
   const minutesRefreshRate = 30;
   const runOnInit = true;
-  logger.log("Setting up revert history job")
+  logger.log("Setting up revert history job");
 
   CronService.scheduleRecurringJob(fetchPriceUpdatingRevertHistory, minutesRefreshRate, runOnInit);
 };
