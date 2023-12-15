@@ -5,10 +5,14 @@ Token Price Oracle is simple oracle for tracking token prices on-chain.
 In this repo is located the Typescript Client orchestrator used for
 tracking, management and orchestration of the data.
 
+![Token Price Oracle - SC - banner](./assets/general-diagram.png)
+
 ## Documentation 📚
 You'll find the API specification under `/docs/api` and you can also run
 interactive Swagger client by running the project and going to the `/api-docs` route in your browser.  
 _Example: http://localhost:3001/api-docs_
+
+The main site for documentation is located on the [link here](https://despotf.gitbook.io/token-price-oracle/).
 
 ## Running the project 🚀
 ### Requirements ✅
@@ -49,7 +53,7 @@ if you're trying to run the project using docker or your local setup
 4. Run `docker-compose up`
 5. That's it!
 > [!NOTE]
-> If you've pulled new code files you'll have to rebuild the Docker image using `docker-compose build --no-cache node_backend`
+> If you've pulled new code files you'll have to rebuild the Docker image using `docker-compose build --no-cache token_price_oracle_orchestrator_ts`
 
 #### Running locally
 4. Run ```yarn``` to install the dependencies
