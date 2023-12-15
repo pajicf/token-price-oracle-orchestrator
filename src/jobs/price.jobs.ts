@@ -2,17 +2,23 @@ import CoinGeckoService from "../services/coingecko/coingecko.service";
 import CronService from "../services/cron.service";
 import store from "../redux/store";
 import { getCoingeckoIdByChainlinkTicker } from "../constants/coingecko";
-import { setCurrentOffchainPrice, setCurrentOnchainPrice } from "../redux/prices/prices.redux.actions";
+import {
+  addPriceRevertedTx,
+  setCurrentOffchainPrice,
+  setCurrentOnchainPrice
+} from "../redux/prices/prices.redux.actions";
 import OracleService from "../services/oracle/oracle.service";
 import logger from "../utils/logger.util";
 import { RootSocket } from "../index";
-import Web3Service from "../services/web3.service";
 import { CONFIG } from "../config";
+import EtherscanService from "../services/etherscan/etherscan.service";
 import ChainlinkService from "../services/chainlink.service";
+import Web3Service from "../services/web3.service";
 
 const coinGecko = new CoinGeckoService();
+const etherscan = new EtherscanService();
+
 const oracleService = new OracleService();
-const registryContract = Web3Service.getTickerUSDFeedRegistryContract(CONFIG.TICKER_USD_FEED_REGISTRY);
 
 export const setupOffchainPriceFetchingJob = async () => {
   CronService.scheduleRecurringJob(async () => {
@@ -62,5 +68,37 @@ export const setupOnchainPriceFetchingJobFor = async (tickerSymbol: string) => {
   });
 };
 
+let lastBlockCache: number = CONFIG.CONTRACTS_DEPLOYMENT_BLOCK;
+const fetchPriceUpdatingRevertHistory = async () => {
+  logger.log(`Trying to find reverts since block number: ${lastBlockCache}`)
+
+  const currentBlockNumber = await Web3Service.provider.getBlockNumber();
+  const revertedTransactions = await etherscan.getRevertedTxHistory(CONFIG.TICKER_PRICE_STORAGE, lastBlockCache);
+  lastBlockCache = currentBlockNumber;
+
+  for (let i = 0; i < revertedTransactions.length; i++) {
+    const tx = revertedTransactions[i];
+    logger.log(`Revert found with tx hash ${tx.hash}`)
+
+    const parsedTxInputs = oracleService.parseInputData(tx.input);
+    const chainlinkFeedAddress = store.getState().tickers.chainlinkFeed[parsedTxInputs.ticker];
+
+    // @TODO Handle invalid ticker param sent
+    if (!chainlinkFeedAddress) {
+      continue;
+    }
+
+    const chainlinkFeed = new ChainlinkService(chainlinkFeedAddress);
+    const chainlinkPrice = await chainlinkFeed.getPriceForBlock(Number(tx.blockNumber));
+
+    store.dispatch(addPriceRevertedTx(tx.hash, parsedTxInputs.ticker, Number(parsedTxInputs.price), Number(chainlinkPrice)));
+  }
+}
+
 export const setupPriceUpdateRevertObserverJob = async () => {
+  const minutesRefreshRate = 30;
+  const runOnInit = true;
+  logger.log("Setting up revert history job")
+
+  CronService.scheduleRecurringJob(fetchPriceUpdatingRevertHistory, minutesRefreshRate, runOnInit);
 };
