@@ -5,7 +5,7 @@ import store from "../../../redux/store";
 import { NotFoundError } from "../../../utils/errors.util";
 import { APIResponse } from "../../../utils/response.util";
 import CoingeckoService from "../../../services/coingecko/coingecko.service";
-import {getCoingeckoIdByChainlinkTicker} from "../../../constants/coingecko";
+import { getCoingeckoIdByChainlinkTicker } from "../../../constants/coingecko";
 
 class TickersRoute {
   public static getTicker: TickersRouteDefinitions.RouteMethod<ETickersRoute.GetTicker> = async (request, response, next) => {
@@ -46,6 +46,11 @@ class TickersRoute {
 
       const coingecko = new CoingeckoService();
       const coingeckoId = getCoingeckoIdByChainlinkTicker(tickerSymbol);
+
+      if (!coingeckoId) {
+        throw new NotFoundError();
+      }
+
       const priceHistory = await coingecko.getPriceHistory(coingeckoId, from, to);
 
       return response.status(200).json(APIResponse.success({
@@ -55,7 +60,7 @@ class TickersRoute {
     } catch (error) {
       next(error);
     }
-  }
+  };
 }
 
 export default TickersRoute;
