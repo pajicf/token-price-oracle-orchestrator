@@ -2,8 +2,6 @@ import TickersRouteDefinitions from "../definitions/tickers.route";
 import { val } from "../middlewares/validate.middleware";
 import { checkSchema } from "express-validator";
 import { ValidatorFields } from "../../../types/util.types";
-import {MinMaxOptions} from "express-validator/src/options";
-import {ExistsOptions} from "express-validator/src/chain";
 
 type GetTickerFields = keyof (
   TickersRouteDefinitions.TickerParams
@@ -54,7 +52,7 @@ const getTickerPriceHistorySchema: ValidatorFields<GetTickerPriceHistoryFields> 
       }
     }
   }
-}
+};
 
 export default class TickersValidator {
   public static validateGetTicker = val(checkSchema(getTickerSchema));

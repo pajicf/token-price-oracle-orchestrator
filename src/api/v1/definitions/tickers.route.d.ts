@@ -1,5 +1,5 @@
 import { EmptyObject, ParamsDictionary } from "../../../types/util.types";
-import {TickerEntity, TickerHistoryEntity} from "../../../entities/ticker.entity";
+import { TickerEntity, TickerHistoryEntity } from "../../../entities/ticker.entity";
 import { IResponseSuccess } from "../../../utils/response.util";
 import { NextFunction, Request as ExpressRequest, Response as ExpressResponse } from "express";
 

@@ -3,7 +3,7 @@ import { CONFIG } from "../../config";
 import { EAuthenticationType } from "../../types/auth.types";
 import { arrayToString } from "../../utils/common.util";
 import { CoinGeckoFiatCurrencies } from "../../constants/coingecko";
-import {CoinGeckoMarketChartRangeResponse, CoinGeckoSimplePriceResponse} from "./coingecko.service.types";
+import { CoinGeckoMarketChartRangeResponse, CoinGeckoSimplePriceResponse } from "./coingecko.service.types";
 
 class CoinGeckoService extends RestService {
   constructor() {
@@ -41,7 +41,7 @@ class CoinGeckoService extends RestService {
           to: to
         }
       }
-    })
+    });
 
     return response.data;
   }
