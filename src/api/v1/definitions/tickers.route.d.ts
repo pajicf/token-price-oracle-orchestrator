@@ -1,5 +1,5 @@
 import { EmptyObject, ParamsDictionary } from "../../../types/util.types";
-import { TickerEntity } from "../../../entities/ticker.entity";
+import { TickerEntity, TickerHistoryEntity } from "../../../entities/ticker.entity";
 import { IResponseSuccess } from "../../../utils/response.util";
 import { NextFunction, Request as ExpressRequest, Response as ExpressResponse } from "express";
 
@@ -17,14 +17,15 @@ declare namespace TickersRouteDefinitions {
     // GET /tickers
     T extends ETickersRoute.GetTickerList ? TickerEntity[] :
     // GET /tickers/[ticker]/history
-    T extends ETickersRoute.GetTickerHistory ? EmptyObject :
+    T extends ETickersRoute.GetTickerHistory ? TickerHistoryEntity :
     EmptyObject
 
   type RequestBody<T extends ETickersRoute> = // eslint-disable-line @typescript-eslint/no-unused-vars
     EmptyObject;
 
-  type RequestQueries<T extends ETickersRoute> = // eslint-disable-line @typescript-eslint/no-unused-vars
-    EmptyObject
+  type RequestQueries<T extends ETickersRoute> =
+    T extends ETickersRoute.GetTickerHistory ? TickerPriceHistoryQueries :
+    EmptyObject;
 
   type RequestParams<T extends ETickersRoute> =
     // GET /tickers/[ticker]
@@ -42,6 +43,12 @@ declare namespace TickersRouteDefinitions {
   // PARAMS
   type TickerParams = {
     tickerSymbol: string;
+  }
+
+  // QUERY
+  type TickerPriceHistoryQueries = {
+    from: number,
+    to: number
   }
 }
 

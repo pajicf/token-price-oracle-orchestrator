@@ -6,8 +6,6 @@ import { APIResponse } from "../../../utils/response.util";
 import logger from "../../../utils/logger.util";
 
 export async function error(error: Error, request: Request, response: Response, next: NextFunction) { // eslint-disable-line @typescript-eslint/no-unused-vars
-  logger.error(error);
-
   let status: number;
   let message: string;
   let errors: any | undefined;
@@ -23,6 +21,7 @@ export async function error(error: Error, request: Request, response: Response, 
     message = error.message || "Validation error";
     errors = error.err;
   } else {
+    logger.error(error);
     status = 500;
     message = "Server error";
   }
