@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "ba5c6c37-b93c-4d5b-8d4b-74bec4dd9dff",
+		"name": "Token-Price-Oracle-Orchestrator",
+		"description": "Token Price Oracle is simple oracle for tracking token prices on-chain.\n\nThis is the documentation of the API endpoints used for consuming the collected data",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16309767"
+	},
+	"item": [
+		{
+			"name": "Ticker List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/tickers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"tickers"
+					]
+				},
+				"description": "Returns list of on-chain and off-chain price data of all the tickers available in the storage"
+			},
+			"response": []
+		},
+		{
+			"name": "Ticker",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/tickers/{{tickerSymbol}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"tickers",
+						"{{tickerSymbol}}"
+					]
+				},
+				"description": "Returns on-chain and off-chain price data of a given ticker."
+			},
+			"response": []
+		},
+		{
+			"name": "Ticker Historical prices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/tickers/{{tickerSymbol}}/history?from=1702532251&to=1702632251",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"tickers",
+						"{{tickerSymbol}}",
+						"history"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "1702532251"
+						},
+						{
+							"key": "to",
+							"value": "1702632251"
+						}
+					]
+				},
+				"description": "Returns the historical price data of a given ticker between the given Unix timestamps"
+			},
+			"response": []
+		},
+		{
+			"name": "On-chain historical reverts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/reverts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"reverts"
+					]
+				},
+				"description": "Returns all of the reverts that happened on-chain (regardless of the sender) for the price updating action on the TokenPriceStorage contract."
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "tickerSymbol",
+			"value": "ETH"
+		}
+	]
+}
