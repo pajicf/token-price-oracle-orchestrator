@@ -1,5 +1,5 @@
 import { initTickerState, setupTickerFetchingJob } from "./ticker.jobs";
-import { initOnchainPriceState, setupOffchainPriceFetchingJob } from "./price.jobs";
+import { initOnchainPriceState, setupOffchainPriceFetchingJob, setupPriceUpdateRevertObserverJob } from "./price.jobs";
 import logger from "../utils/logger.util";
 import store from "../redux/store";
 
@@ -13,6 +13,8 @@ const initAppState = async () => {
 
 export const initApp = async () => {
   await initAppState();
+  await setupPriceUpdateRevertObserverJob();
+
 
   await setupTickerFetchingJob();
   await setupOffchainPriceFetchingJob();

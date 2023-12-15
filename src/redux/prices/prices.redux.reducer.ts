@@ -2,7 +2,8 @@ import { EPricesReduxActions, PricesReduxActions, PricesReduxReducerState } from
 import { Reducer } from "redux";
 
 const initialState: PricesReduxReducerState = {
-  current: {}
+  current: {},
+  reverts: {}
 };
 
 const pricesReduxReducer: Reducer<PricesReduxReducerState, PricesReduxActions> = (state = initialState, action) => {
@@ -31,6 +32,26 @@ const pricesReduxReducer: Reducer<PricesReduxReducerState, PricesReduxActions> =
           [tickerSymbol]: {
             ...(state.current[tickerSymbol] || {}),
             offchain: offchainPrice
+          }
+        }
+      };
+    }
+    case EPricesReduxActions.ADD_PRICE_REVERTED_TX: {
+      const {
+        txHash,
+        tickerSymbol,
+        sentPrice,
+        chainlinkPrice
+      } = action.payload;
+
+      return {
+        ...state,
+        reverts: {
+          ...state.reverts,
+          [txHash]: {
+            tickerSymbol,
+            sentPrice,
+            chainlinkPrice
           }
         }
       };

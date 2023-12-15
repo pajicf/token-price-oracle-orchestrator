@@ -1,5 +1,9 @@
 import { ethers, JsonRpcProvider, Wallet } from "ethers";
-import { TickerPriceStorageAbi__factory, TickerUSDFeedRegistryAbi__factory } from "../contracts";
+import {
+  ChainlinkAggregatorV3Abi__factory,
+  TickerPriceStorageAbi__factory,
+  TickerUSDFeedRegistryAbi__factory
+} from "../contracts";
 
 import { CONFIG } from "../config";
 
@@ -22,6 +26,10 @@ class Web3Service {
 
   public getTickerPriceStorageContract(address: string, isMutatingState?: boolean) {
     return TickerPriceStorageAbi__factory.connect(address, this._getRunner(!!isMutatingState));
+  }
+
+  public getChainlinkPriceFeedContract(address: string) {
+    return ChainlinkAggregatorV3Abi__factory.connect(address, this._getRunner(false));
   }
 }
 

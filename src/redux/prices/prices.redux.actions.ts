@@ -1,4 +1,9 @@
-import { EPricesReduxActions, SetCurrentOffchainPriceAction, SetCurrentOnchainPriceAction } from "./prices.redux.types";
+import {
+  AddPriceRevertedTx,
+  EPricesReduxActions,
+  SetCurrentOffchainPriceAction,
+  SetCurrentOnchainPriceAction
+} from "./prices.redux.types";
 
 export function setCurrentOnchainPrice(tickerSymbol: string, onchainPrice: number): SetCurrentOnchainPriceAction {
   return {
@@ -16,6 +21,18 @@ export function setCurrentOffchainPrice(tickerSymbol: string, offchainPrice: num
     payload: {
       tickerSymbol,
       offchainPrice
+    }
+  };
+}
+
+export function addPriceRevertedTx(txHash: string, tickerSymbol: string, sentPrice: number, chainlinkPrice: number): AddPriceRevertedTx {
+  return {
+    type: EPricesReduxActions.ADD_PRICE_REVERTED_TX,
+    payload: {
+      txHash,
+      tickerSymbol,
+      sentPrice,
+      chainlinkPrice
     }
   };
 }
