@@ -4,6 +4,8 @@ import { tickerEntityFromReduxState } from "../../../entities/ticker.entity";
 import store from "../../../redux/store";
 import { NotFoundError } from "../../../utils/errors.util";
 import { APIResponse } from "../../../utils/response.util";
+import CoingeckoService from "../../../services/coingecko/coingecko.service";
+import {getCoingeckoIdByChainlinkTicker} from "../../../constants/coingecko";
 
 class TickersRoute {
   public static getTicker: TickersRouteDefinitions.RouteMethod<ETickersRoute.GetTicker> = async (request, response, next) => {
@@ -36,6 +38,24 @@ class TickersRoute {
       next(error);
     }
   };
+
+  public static getTickerPriceHistory: TickersRouteDefinitions.RouteMethod<ETickersRoute.GetTickerHistory> = async (request, response, next) => {
+    try {
+      const { tickerSymbol } = request.params;
+      const { from, to } = request.query;
+
+      const coingecko = new CoingeckoService();
+      const coingeckoId = getCoingeckoIdByChainlinkTicker(tickerSymbol);
+      const priceHistory = await coingecko.getPriceHistory(coingeckoId, from, to);
+
+      return response.status(200).json(APIResponse.success({
+        symbol: tickerSymbol,
+        prices: priceHistory.prices
+      }));
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default TickersRoute;

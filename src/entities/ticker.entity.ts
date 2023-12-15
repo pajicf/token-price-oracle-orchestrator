@@ -20,3 +20,10 @@ export function tickerEntityFromReduxState(tickerSymbol: string, state: RootStat
     return undefined;
   }
 }
+export type TickerHistoryEntity = {
+  symbol: string;
+  prices: [
+    timestamp: number,
+    price: number
+  ][];
+}

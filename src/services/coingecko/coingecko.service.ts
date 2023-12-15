@@ -31,7 +31,7 @@ class CoinGeckoService extends RestService {
     return response.data;
   }
 
-  public async getPriceHistory(id: string, from: string, to: string): Promise<CoinGeckoMarketChartRangeResponse> {
+  public async getPriceHistory(id: string, from: number, to: number): Promise<CoinGeckoMarketChartRangeResponse> {
     const response = await this.get<CoinGeckoMarketChartRangeResponse>({
       url: `/coins/${id}/market_chart/range`,
       config: {

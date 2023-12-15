@@ -8,6 +8,7 @@ const v1 = Router();
 
 v1.get("/tickers/", TickersRoute.getTickerList);
 v1.get("/tickers/:tickerSymbol", TickersValidator.validateGetTicker, TickersRoute.getTicker);
+v1.get("/tickers/:tickerSymbol/history", TickersValidator.validateGetTickerPriceHistory, TickersRoute.getTickerPriceHistory);
 
 v1.get("/status", StatusRoute.getStatus);
 
