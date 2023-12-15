@@ -5,6 +5,11 @@ Token Price Oracle is simple oracle for tracking token prices on-chain.
 In this repo is located the Typescript Client orchestrator used for
 tracking, management and orchestration of the data.
 
+## Documentation 📚
+You'll find the API specification under `/docs/api` and you can also run
+interactive Swagger client by running the project and going to the `/api-docs` route in your browser.  
+_Example: http://localhost:3001/api-docs_
+
 ## Running the project 🚀
 ### Requirements ✅
 - On your computer
