@@ -21,7 +21,17 @@ tracking, management and orchestration of the data.
 2. Navigate to the folder: ```cd token-price-oracle-orchestrator```
 
 #### Setting up the environment
-3. Run ```cp .env.example .env``` and fill the values`
+3. Run ```cp .env.example .env``` and fill the values`  
+
+**Where can I obtain the needed values?**
+
+| Value             | Description                                                                                                   | Link                                      |
+|------------------|---------------------------------------------------------------------------------------------------------------|--------------------------------------------------|
+| COINGECKO_API_KEY  | The API key for consuming Coingecko service                                                                   | https://www.coingecko.com/en/api/pricing               |
+| ETHERSCAN_API_KEY  | The API key for consuming Etherscan service                                                                   | https://docs.etherscan.io/getting-started/viewing-api-usage-statistics               |
+| ALCHEMY_URL  | Url for interacting with Alchemy (Make sure the Network is the same as of other values)                       | https://docs.alchemy.com/docs/alchemy-quickstart-guide              |
+| PRIVATE_KEY  | The Private key that your orchestrator instance will be using for interacting with the EVM compatible network | https://support.metamask.io/hc/en-us/articles/360015289632-How-to-export-an-account-s-private-key  |
+
 > [!IMPORTANT]  
 > Ensure that you've filled all the needed values in the .env
 
