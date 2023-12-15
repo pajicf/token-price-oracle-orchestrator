@@ -54,7 +54,7 @@ const pricesReduxReducer: Reducer<PricesReduxReducerState, PricesReduxActions> =
             chainlinkPrice
           }
         }
-      }
+      };
     }
     default: {
       return initialState;

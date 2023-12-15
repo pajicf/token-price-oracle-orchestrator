@@ -29,5 +29,5 @@ export function addPriceRevertedTx(txHash: string, tickerSymbol: string, sentPri
       sentPrice,
       chainlinkPrice
     }
-  }
+  };
 }

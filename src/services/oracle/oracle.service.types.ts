@@ -4,5 +4,5 @@ export type TickerPriceData = {
 
 export type SetFunctionArguments = {
   ticker: string,
-  price: BigInt
+  price: bigint
 }

@@ -2,7 +2,6 @@ import RestService from "../rest.service";
 import { CONFIG } from "../../config";
 import { EAuthenticationType } from "../../types/auth.types";
 import { EtherscanContractTxHistoryResponse, EtherscanRevertedTxHistory } from "./etherscan.service.types";
-import {ethers} from "ethers";
 
 class EtherscanService extends RestService {
   constructor() {
