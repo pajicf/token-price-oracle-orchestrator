@@ -1,0 +1,10 @@
+version: "3"
+services:
+  token_price_oracle_orchestrator_ts:
+    container_name: "token_price_oracle_orchestrator_ts"
+    build: .
+    entrypoint: ["./docker-entrypoint.sh"]
+    ports:
+      - ${NODE_PORT}:${NODE_PORT}
+    volumes:
+      - ./docker-entrypoint.sh:/usr/src/app/docker-entrypoint.sh
