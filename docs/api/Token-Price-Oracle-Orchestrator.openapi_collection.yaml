@@ -1,0 +1,88 @@
+openapi: 3.0.3
+info:
+  title: Token-Price-Oracle-Orchestrator
+  description: >-
+    Token Price Oracle is simple oracle for tracking token prices on-chain.
+    This is the documentation of the API endpoints used for consuming the
+    collected data
+  version: 1.0.0
+  contact: {}
+servers:
+  - url: http://localhost
+  
+paths:
+  /api/v1/tickers:
+    get:
+      tags:
+        - Tickers
+      summary: Ticker List
+      description: >-
+        Returns list of on-chain and off-chain price data of all the tickers
+        available in the storage
+      operationId: tickerList
+      responses:
+        '200':
+          description: ''
+  /api/v1/tickers/{tickerSymbol}:
+    get:
+      tags:
+        - Tickers
+      parameters:
+        - name: tickerSymbol
+          in: path
+          description: Ticker of the asset
+          required: true
+          schema:
+            type: string
+      summary: Ticker
+      description: Returns on-chain and off-chain price data of a given ticker.
+      operationId: ticker
+      responses:
+        '200':
+          description: ''
+  /api/v1/tickers/{tickerSymbol}/history:
+    get:
+      tags:
+        - Tickers
+      summary: Ticker Historical prices
+      description: >-
+        Returns the historical price data of a given ticker between the given
+        Unix timestamps
+      operationId: tickerHistoricalPrices
+      parameters:
+        - name: tickerSymbol
+          in: path
+          description: Ticker of the asset
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          schema:
+            type: string
+            example: '1702532251'
+        - name: to
+          in: query
+          schema:
+            type: string
+            example: '1702632251'
+      responses:
+        '200':
+          description: ''
+  /api/v1/reverts:
+    get:
+      tags:
+        - Reverts
+      summary: On-chain historical reverts
+      description: >-
+        Returns all of the reverts that happened on-chain (regardless of the
+        sender) for the price updating action on the TokenPriceStorage contract.
+      operationId: onChainHistoricalReverts
+      responses:
+        '200':
+          description: ''
+tags:
+  - name: Tickers
+    description: All ticker data
+  - name: Reverts
+    description: Historical reverts data
