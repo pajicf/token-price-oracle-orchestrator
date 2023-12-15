@@ -1,7 +1,7 @@
 import RestService from "../rest.service";
-import {CONFIG} from "../../config";
-import {EAuthenticationType} from "../../types/auth.types";
-import {EtherscanContractTxHistoryResponse, EtherscanRevertedTxHistory} from "./etherscan.service.types";
+import { CONFIG } from "../../config";
+import { EAuthenticationType } from "../../types/auth.types";
+import { EtherscanContractTxHistoryResponse, EtherscanRevertedTxHistory } from "./etherscan.service.types";
 
 class EtherscanService extends RestService {
   constructor() {
@@ -12,7 +12,7 @@ class EtherscanService extends RestService {
         paramName: CONFIG.ETHERSCAN_API_KEY_QUERY_NAME,
         paramValue: CONFIG.ETHERSCAN_API_KEY
       }
-    })
+    });
   }
 
   public async getContractTxHistory(contractAddress: string, startBlock: number): Promise<EtherscanContractTxHistoryResponse> {
@@ -27,7 +27,7 @@ class EtherscanService extends RestService {
           sort: "asc"
         }
       }
-    })
+    });
 
     return response.data;
   }
@@ -42,9 +42,9 @@ class EtherscanService extends RestService {
           results.push({
             blockNumber: etherscanResponse.blockNumber,
             hash: etherscanResponse.hash
-          })
+          });
         }
-      })
+      });
     } else {
       return [];
     }
@@ -53,4 +53,4 @@ class EtherscanService extends RestService {
   }
 }
 
-export default EtherscanService
+export default EtherscanService;

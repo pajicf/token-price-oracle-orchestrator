@@ -6,9 +6,12 @@ import { setCurrentOffchainPrice, setCurrentOnchainPrice } from "../redux/prices
 import OracleService from "../services/oracle/oracle.service";
 import logger from "../utils/logger.util";
 import { RootSocket } from "../index";
+import Web3Service from "../services/web3.service";
+import { CONFIG } from "../config";
 
 const coinGecko = new CoinGeckoService();
 const oracleService = new OracleService();
+const registryContract = Web3Service.getTickerUSDFeedRegistryContract(CONFIG.TICKER_USD_FEED_REGISTRY);
 
 export const setupOffchainPriceFetchingJob = async () => {
   CronService.scheduleRecurringJob(async () => {
@@ -59,5 +62,4 @@ export const setupOnchainPriceFetchingJobFor = async (tickerSymbol: string) => {
 };
 
 export const setupPriceUpdateRevertObserverJob = async () => {
-
-}
+};
