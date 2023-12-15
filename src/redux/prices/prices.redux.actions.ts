@@ -19,3 +19,15 @@ export function setCurrentOffchainPrice(tickerSymbol: string, offchainPrice: num
     }
   };
 }
+
+export function addPriceRevertedTx(txHash: string, tickerSymbol: string, sentPrice: number, chainlinkPrice: number) {
+  return {
+    type: EPricesReduxActions.ADD_PRICE_REVERTED_TX,
+    payload: {
+      txHash,
+      tickerSymbol,
+      sentPrice,
+      chainlinkPrice
+    }
+  }
+}
