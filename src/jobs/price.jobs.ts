@@ -57,3 +57,7 @@ export const setupOnchainPriceFetchingJobFor = async (tickerSymbol: string) => {
     RootSocket.emitEvent("TickerPriceUpdated", [tickerSymbol, tickerPriceData.newPrice]);
   });
 };
+
+export const setupPriceUpdateRevertObserverJob = async () => {
+
+}

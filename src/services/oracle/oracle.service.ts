@@ -3,6 +3,7 @@ import { CONFIG } from "../../config";
 import logger from "../../utils/logger.util";
 import { TypedEventLog } from "../../contracts/common";
 import { TickerPriceData } from "./oracle.service.types";
+import {EtherscanProvider} from "ethers";
 
 class OracleService {
   private _tickerPriceContract;
