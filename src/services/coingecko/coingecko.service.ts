@@ -3,7 +3,7 @@ import { CONFIG } from "../../config";
 import { EAuthenticationType } from "../../types/auth.types";
 import { arrayToString } from "../../utils/common.util";
 import { CoinGeckoFiatCurrencies } from "../../constants/coingecko";
-import { CoinGeckoSimplePriceResponse } from "./coingecko.service.types";
+import {CoinGeckoMarketChartRangeResponse, CoinGeckoSimplePriceResponse} from "./coingecko.service.types";
 
 class CoinGeckoService extends RestService {
   constructor() {
@@ -27,6 +27,21 @@ class CoinGeckoService extends RestService {
         }
       }
     });
+
+    return response.data;
+  }
+
+  public async getPriceHistory(id: string, from: string, to: string): Promise<CoinGeckoMarketChartRangeResponse> {
+    const response = await this.get<CoinGeckoMarketChartRangeResponse>({
+      url: `/coins/${id}/market_chart/range`,
+      config: {
+        params: {
+          vs_currency: CoinGeckoFiatCurrencies.USD,
+          from: from,
+          to: to
+        }
+      }
+    })
 
     return response.data;
   }
