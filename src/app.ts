@@ -5,6 +5,9 @@ import cors from "cors";
 import api from "./api";
 import { initApp } from "./jobs/app.jobs";
 
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "../docs/api/Token-Price-Oracle-Orchestrator.openapi_collection.json";
+
 const { NODE_PORT, NODE_HOST } = CONFIG;
 const app = express();
 
@@ -15,9 +18,11 @@ app.use(cors(CONFIG.CORS_OPTIONS));
 app.use(bodyParser.json());
 
 const apiRouter = Router();
-apiRouter.use("/api", api);
 
-initApp();
+apiRouter.use("/api", api);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+  initApp();
 
 app.use(apiRouter);
 // 404
