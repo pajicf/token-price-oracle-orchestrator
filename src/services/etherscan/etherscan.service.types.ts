@@ -30,4 +30,5 @@ export type EtherscanContractTxHistoryResponse = EtherscanResponse<{
 export type EtherscanRevertedTxHistory = {
   blockNumber: string,
   hash: string,
+  input: string
 }[]

@@ -2,7 +2,7 @@ import Web3Service from "../web3.service";
 import { CONFIG } from "../../config";
 import logger from "../../utils/logger.util";
 import { TypedEventLog } from "../../contracts/common";
-import { TickerPriceData } from "./oracle.service.types";
+import {SetFunctionArguments, TickerPriceData} from "./oracle.service.types";
 
 class OracleService {
   private _tickerPriceContract;
@@ -65,6 +65,15 @@ class OracleService {
 
       onPriceUpdate(parsedEvent);
     });
+  }
+
+  public parseInputData(input: string): SetFunctionArguments {
+    const txDescription = this._tickerPriceContract.interface.parseTransaction({ data: input });
+
+    return {
+      ticker: txDescription.args[0],
+      price: txDescription.args[1]
+    }
   }
 
   private parseTickerPriceUpdatedEvent(event: TypedEventLog<any>): TickerPriceData {

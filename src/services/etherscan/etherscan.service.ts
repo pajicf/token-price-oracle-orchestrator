@@ -2,6 +2,7 @@ import RestService from "../rest.service";
 import { CONFIG } from "../../config";
 import { EAuthenticationType } from "../../types/auth.types";
 import { EtherscanContractTxHistoryResponse, EtherscanRevertedTxHistory } from "./etherscan.service.types";
+import {ethers} from "ethers";
 
 class EtherscanService extends RestService {
   constructor() {
@@ -41,7 +42,8 @@ class EtherscanService extends RestService {
         if (etherscanResponse.isError == "1") {
           results.push({
             blockNumber: etherscanResponse.blockNumber,
-            hash: etherscanResponse.hash
+            hash: etherscanResponse.hash,
+            input: etherscanResponse.input
           });
         }
       });

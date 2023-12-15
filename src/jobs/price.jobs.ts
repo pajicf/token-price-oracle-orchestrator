@@ -8,6 +8,7 @@ import logger from "../utils/logger.util";
 import { RootSocket } from "../index";
 import Web3Service from "../services/web3.service";
 import { CONFIG } from "../config";
+import ChainlinkService from "../services/chainlink.service";
 
 const coinGecko = new CoinGeckoService();
 const oracleService = new OracleService();
